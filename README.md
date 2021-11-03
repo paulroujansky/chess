@@ -1,7 +1,10 @@
-|GitHub Actions|_
+|GitHub Actions|_ |Codecov|_
 
 .. |GitHub Actions| image:: https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg
 .. _GitHub Actions: https://github.com/paulroujansky/chess/actions/workflows/main.yml
+
+.. |Codecov| image:: https://codecov.io/gh/paulroujansky/chess/branch/main/graph/badge.svg
+.. _Codecov: https://codecov.io/gh/paulroujansky/chess
 
 # :chess_pawn: Chess :chess_pawn:
 
