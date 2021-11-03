@@ -16,25 +16,25 @@ def create_board():
 
 def board_to_string(board):
     board = board.copy().astype(str)
-    board[board == 'None'] = ''
+    board[board == "None"] = ""
 
-    strng = ''
+    strng = ""
 
     for i, (row, row_name) in enumerate(zip(board, ROW_NAMES)):
 
-        row_str = '| ' + ' | '.join([f' {cell:1s} ' for cell in row]) + ' |'
-        row_name_str = f'{row_name} '
-        strng += ' ' * len(row_name_str) + '+' + '-' * (len(row_str) - 2) + '+'
-        strng += '\n'
+        row_str = "| " + " | ".join([f" {cell:1s} " for cell in row]) + " |"
+        row_name_str = f"{row_name} "
+        strng += " " * len(row_name_str) + "+" + "-" * (len(row_str) - 2) + "+"
+        strng += "\n"
         strng += row_name_str + row_str
-        strng += '\n'
+        strng += "\n"
 
-    col_names_str = '  ' + \
-        '   '.join([f' {col_name:1s} ' for col_name in COL_NAMES]) + '  '
-    strng += ' ' * len(row_name_str) + '+' + '-' * \
-        (len(col_names_str) - 2) + '+'
-    strng += '\n'
-    strng += ' ' * len(row_name_str) + col_names_str
+    col_names_str = (
+        "  " + "   ".join([f" {col_name:1s} " for col_name in COL_NAMES]) + "  "
+    )
+    strng += " " * len(row_name_str) + "+" + "-" * (len(col_names_str) - 2) + "+"
+    strng += "\n"
+    strng += " " * len(row_name_str) + col_names_str
 
     return strng
 
@@ -44,7 +44,6 @@ def display_board(board):
 
 
 class Board:
-
     def __init__(self, players=None):
         self.chessboard = create_board()
         if players:
@@ -70,7 +69,7 @@ class Board:
 
     def to_str_arr(self):
         chessboard = self.chessboard.copy()
-        chessboard[chessboard == None] = ''  # noqa: E711
+        chessboard[chessboard == None] = ""  # noqa: E711
         return chessboard.astype(str)
 
     def __str__(self):
@@ -91,7 +90,7 @@ class Board:
         elif isinstance(loc, (tuple, list)):
             coords = tuple(loc)
         else:
-            raise ValueError('`loc` must be either a str or a 2-tuple')
+            raise ValueError("`loc` must be either a str or a 2-tuple")
         return self.chessboard[coords_to_np(coords)]
 
     def set_piece(self, piece):
@@ -105,5 +104,7 @@ class Board:
         if piece is None:
             return []
         else:
-            return [coords_to_loc(move.get_new_coords(piece.coords))
-                    for move in piece.get_valid_moves()]
+            return [
+                coords_to_loc(move.get_new_coords(piece.coords))
+                for move in piece.get_valid_moves()
+            ]

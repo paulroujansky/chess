@@ -5,3 +5,4 @@ fire
 pytest
 pytest-cov
 pytest-sugar
+black

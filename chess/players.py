@@ -6,10 +6,9 @@ from .pieces import King
 
 
 class Player:
-
     def __init__(self, color, pieces=None):
 
-        if color not in ['white', 'black']:
+        if color not in ["white", "black"]:
             raise ValueError('`color` must be either "white" or "black".')
         self.color = color
         self.in_check = False
@@ -31,11 +30,9 @@ class Player:
                 valid_moves.append((piece, moves))
         return valid_moves
 
-    def get_move(self, board, conditions=None, check_check=True,
-                 strategy='random'):
+    def get_move(self, board, conditions=None, check_check=True, strategy="random"):
         # get all valid moves
-        valid_moves = self.get_valid_moves(
-            board, conditions, check_check=check_check)
+        valid_moves = self.get_valid_moves(board, conditions, check_check=check_check)
         if len(valid_moves) == 0:
             return None
 
@@ -46,7 +43,7 @@ class Player:
         # if len(valid_moves_) > 0:
         #     valid_moves = valid_moves_
 
-        if strategy == 'random':
+        if strategy == "random":
             # randomly select piece
             idx = np.random.choice(len(valid_moves), 1)[0]
             (piece, moves) = valid_moves[idx]

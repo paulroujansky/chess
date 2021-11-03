@@ -5,7 +5,6 @@ from .coords import Coords
 
 
 class Move(Coords):
-
     def __init__(self, coords, conditions=None):
         if not isinstance(conditions, list):
             conditions = [conditions]
@@ -15,16 +14,15 @@ class Move(Coords):
 
     def __repr__(self):
         (x, y) = self.coords
-        sign_x = '+' if x >= 0 else ''
-        sign_y = '+' if y >= 0 else ''
-        return f'({sign_x}{x}, {sign_y}{y})'
+        sign_x = "+" if x >= 0 else ""
+        sign_y = "+" if y >= 0 else ""
+        return f"({sign_x}{x}, {sign_y}{y})"
 
     def get_new_coords(self, init_coords):
         return (init_coords[0] + self.x, init_coords[1] + self.y)
 
 
 class Castling(Move):
-
     def __init__(self, coords, symbol, rook_col, rook_move):
         Move.__init__(self, coords)
         self.symbol = symbol
@@ -33,26 +31,16 @@ class Castling(Move):
 
 
 class QueenSideCastling(Castling):
-
     def __init__(self):
         Castling.__init__(
-            self,
-            coords=(-2, 0),
-            symbol='0-0-0',
-            rook_col=1,
-            rook_move=Move((+3, 0))
+            self, coords=(-2, 0), symbol="0-0-0", rook_col=1, rook_move=Move((+3, 0))
         )
 
 
 class KingSideCastling(Castling):
-
     def __init__(self):
         Castling.__init__(
-            self,
-            coords=(+2, 0),
-            symbol='0-0',
-            rook_col=8,
-            rook_move=Move((-2, 0))
+            self, coords=(+2, 0), symbol="0-0", rook_col=8, rook_move=Move((-2, 0))
         )
 
 
@@ -72,25 +60,26 @@ def is_move_valid(piece, move, board, conditions=None, check_check=True):
             return False
 
     for condition in move.conditions:
-        if condition == 'first_move':
+        if condition == "first_move":
             if piece.has_moved:
                 return False
-        if condition == 'empty':
+        if condition == "empty":
             if target_cell is not None:
                 return False
-        elif condition == 'adversary OR en_passant':
-            if target_cell is None or (target_cell is not None and
-                                       target_cell.color == piece.color):
+        elif condition == "adversary OR en_passant":
+            if target_cell is None or (
+                target_cell is not None and target_cell.color == piece.color
+            ):
                 # implement "en-passant" check
                 return False
-        elif condition == 'empty OR adversary':
+        elif condition == "empty OR adversary":
             if target_cell is not None and target_cell.color == piece.color:
                 return False
-        elif condition == 'empty_diag':
+        elif condition == "empty_diag":
             for x, y in zip(range(sx, move.x, sx), range(sy, move.y, sy)):
                 if board.get_piece((piece.x + x, piece.y + y)) is not None:
                     return False
-        elif condition == 'empty_row':
+        elif condition == "empty_row":
             if move.x == 0:
                 for y in range(sy, move.y, sy):
                     if board.get_piece((piece.x, piece.y + y)) is not None:
@@ -114,7 +103,8 @@ def is_move_valid(piece, move, board, conditions=None, check_check=True):
                 return False
         # check that target Rook has not moved neither
         castling_rook = board.get_piece(
-            (1 if piece.color == 'white' else 8, move.rook_col))
+            (1 if piece.color == "white" else 8, move.rook_col)
+        )
         if castling_rook is None or not isinstance(castling_rook, Rook):
             return False
         else:
@@ -125,8 +115,7 @@ def is_move_valid(piece, move, board, conditions=None, check_check=True):
     if check_check:
         # simulate move
         current_player = board.get_player(piece.color)
-        other_player = board.get_player(
-            'white' if piece.color == 'black' else 'black')
+        other_player = board.get_player("white" if piece.color == "black" else "black")
 
         if target_cell is not None and target_cell.color != piece.color:
             # take adversary piece
@@ -142,8 +131,7 @@ def is_move_valid(piece, move, board, conditions=None, check_check=True):
         board.set_piece(piece)
 
         # check if move lead to an in-check position for the current player
-        in_check, in_check_pieces = is_in_check(
-            current_player, other_player, board)
+        in_check, in_check_pieces = is_in_check(current_player, other_player, board)
         # revert back simulated move
         board.del_piece(piece)
         piece.coords = init_coords
