@@ -1,4 +1,9 @@
-# Chess game
+|GitHub Actions|_
+
+.. |GitHub Actions| image:: https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg
+.. _GitHub Actions: https://github.com/paulroujansky/chess/actions/workflows/main.yml
+
+# :chess_pawn: Chess :chess_pawn:
 
 This repository contains code that enables to play chess against a computer.
 
