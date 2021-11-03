@@ -1,4 +1,12 @@
-# Chess game
+|GitHub Actions|_ |Codecov|_
+
+.. |GitHub Actions| image:: https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg
+.. _GitHub Actions: https://github.com/paulroujansky/chess/actions/workflows/main.yml
+
+.. |Codecov| image:: https://codecov.io/gh/paulroujansky/chess/branch/main/graph/badge.svg
+.. _Codecov: https://codecov.io/gh/paulroujansky/chess
+
+# :chess_pawn: Chess :chess_pawn:
 
 This repository contains code that enables to play chess against a computer.
 

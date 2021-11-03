@@ -3,3 +3,10 @@ __pycache__/
 build/
 dist/
 *.ipynb
+*.pyc
+*.so
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+coverage.xml

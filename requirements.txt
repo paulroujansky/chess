@@ -3,3 +3,5 @@ matplotlib
 seaborn
 fire
 pytest
+pytest-cov
+pytest-sugar
