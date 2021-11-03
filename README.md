@@ -1,20 +1,14 @@
-|GitHub Actions|_ |Codecov|_
+[![unit-tests](https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg)](https://github.com/paulroujansky/chess/actions/workflows/main.yml)
 
-.. |GitHub Actions| image:: https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg
-.. _GitHub Actions: https://github.com/paulroujansky/chess/actions/workflows/main.yml
+[![codecov](https://codecov.io/gh/paulroujansky/chess/branch/master/graph/badge.svg)](https://codecov.io/gh/paulroujansky/chess)
 
-.. |Codecov| image:: https://codecov.io/gh/paulroujansky/chess/branch/master/graph/badge.svg
-.. _Codecov: https://codecov.io/gh/paulroujansky/chess
-
-:chess_pawn: Chess :chess_pawn:
-===============================
+# Chess engine
 
 This repository contains code that enables to play chess against a computer.
 
-Installation
---------------
+# Installation
 
-**Clone the repository**
+## Clone the repository
 
 Use the following command to clone the repository with HTTPS:
 ```
@@ -26,7 +20,7 @@ or the following command with SSH:
 git clone git@github.com:paulroujansky/chess.git
 ```
 
-**Set up a virtual environment**
+## Set up a virtual environment
 
 Use the following command to set up a new virtual environment:
 ```
@@ -34,25 +28,23 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-**Install dependencies**
+## Install dependencies
 
 In order to install them manually, run the following command:
 ```
 pip install -r requirements.txt
 ```
 
-Run an example
---------------
+# Run an example
 
 Run the following command to run an example game (computer vs computer):
 ```
 python example_game.py
 ```
 
-Contribution guidelines
------------------------
+# Contribution guidelines
 
-**Tests**
+## Tests
 
 Before committing, from within the main directory, run:
 
@@ -62,8 +54,7 @@ python -m pytest
 
 This will run [`pytest`](https://docs.pytest.org/en/latest/), and run all the existing unit tests to make sure you haven't broken any of the existing codebase.
 
-To-do :memo:
-------------
+# To-do :memo:
 - add tests
 - add a GUI
 - enable to play back a party from history
