@@ -1,5 +1,4 @@
 [![unit-tests](https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg)](https://github.com/paulroujansky/chess/actions/workflows/main.yml)
-
 [![codecov](https://codecov.io/gh/paulroujansky/chess/branch/master/graph/badge.svg)](https://codecov.io/gh/paulroujansky/chess)
 
 # Chess engine
