@@ -46,15 +46,23 @@ for i in range(n_moves):
             if piece_loc == "show":
                 game.show_board()
             elif game.board.get_piece(piece_loc):
+                # get piece
+                piece = game.board.get_piece(piece_loc)
+                if piece.color != game.turn:
+                    print(f"Wrong piece selected")
+                    continue
+                valid_moves = [
+                    coords_to_loc(move.get_new_coords(piece.coords))
+                    for move in piece.get_valid_moves(game.board)
+                ]
+                print(valid_moves)
+                if len(valid_moves) == 0:
+                    print(f"This piece has no moves")
+                    continue
                 break
-            print(f'Invalid piece location "{piece_loc}"')
-        # get piece
-        piece = game.board.get_piece(piece_loc)
-        valid_moves = [
-            coords_to_loc(move.get_new_coords(piece.coords))
-            for move in piece.get_valid_moves(game.board)
-        ]
-        print(valid_moves)
+            else:
+                print(f"Invalid piece location {piece_loc}")
+                continue
         # show moves for selected piece
         game.show_board(loc=piece_loc, show_moves=True)
         # select move
