@@ -1,7 +1,7 @@
 """Example: create a game and let computer play each player at a time."""
-from chess.game import Game
-
 import fire
+
+from chess.game import Game
 
 
 def run_game(max_moves: int = 10, verbose: bool = True, show: bool = True):
@@ -34,9 +34,9 @@ def run_game(max_moves: int = 10, verbose: bool = True, show: bool = True):
 
     # show game history
     if verbose:
-        print('History:')
+        print("History:")
         game.show_history()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fire.Fire(run_game)
