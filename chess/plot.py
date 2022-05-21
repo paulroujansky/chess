@@ -11,7 +11,7 @@ CMAP = ["#faedcd", "#d4a373", "#94cdff", "#ebffb0"]
 
 
 def make_background():
-    background = np.zeros((8, 8))
+    background = np.zeros((8, 8), dtype=int)
     for i in range(8):
         for j in range(8):
             if (i + j) % 2 == 1:
