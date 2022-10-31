@@ -5,7 +5,7 @@ from .coords import Coords
 
 
 class Move(Coords):
-    def __init__(self, coords, conditions=None):
+    def __init__(self, coords: tuple, conditions=None):
         if not isinstance(conditions, list):
             conditions = [conditions]
         self.conditions = conditions
@@ -18,7 +18,7 @@ class Move(Coords):
         sign_y = "+" if y >= 0 else ""
         return f"({sign_x}{x}, {sign_y}{y})"
 
-    def get_new_coords(self, init_coords):
+    def get_new_coords(self, init_coords: tuple) -> tuple:
         return (init_coords[0] + self.x, init_coords[1] + self.y)
 
 

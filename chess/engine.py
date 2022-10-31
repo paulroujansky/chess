@@ -4,7 +4,7 @@ from itertools import product
 import numpy as np
 
 
-def init_pieces(color):
+def init_pieces(color: str):
     from .pieces import Bishop, King, Knight, Pawn, Queen, Rook
 
     if color == "white":

@@ -4,13 +4,13 @@ import numpy as np
 from .board import Board
 from .coords import coords_to_loc
 from .engine import init_pieces
-from .moves import Castling, is_in_check
+from .moves import Move, Castling, is_in_check
 from .pieces import Bishop, Ghost, Knight, Pawn, Queen, Rook
 from .players import Player
 
 
 class Game:
-    def __init__(self, player1, player2):
+    def __init__(self, player1: Player, player2: Player):
         self.player1 = player1
         self.player2 = player2
 
@@ -18,6 +18,8 @@ class Game:
         self.move_number = 1
         self.turn = "white"
         self.is_finished = False
+        self.winner = None
+        self.draw = False
 
         self.automatic_promotion = True
         self.default_promotion = "Q"
@@ -45,8 +47,9 @@ class Game:
         self.turn = "black" if self.turn == "white" else "white"
         if self.turn == "white":
             self.move_number += 1
+        print(f"Switch to {self.turn}")
 
-    def next_move(self, move=None, verbose=True):
+    def next_move(self, move: Move = None, verbose: bool = True):
         # remove current player's ghosts
         for piece in self.current_player.pieces:
             if isinstance(piece, Ghost):
@@ -57,9 +60,12 @@ class Game:
             move = self.current_player.get_move(self.board)
         if move is None:
             if self.current_player.in_check:
-                self.is_finised = True
-                print(f"{self.current_player} is defeated")
+                self.winner = (
+                    "white" if self.current_player.color == "black" else "black"
+                )
+                print(f"{self.winner} player won the game!")
             else:
+                self.draw = True
                 print("Draw")
             self.is_finished = True
             return
@@ -180,9 +186,9 @@ class Game:
 
     @property
     def board(self):
-        return Board.from_players([self.player1, self.player2])
+        return Board([self.player1, self.player2])
 
-    def show_history(self, delimiter="\n"):
+    def get_history(self, delimiter: str = "\n"):
         prev_move_number = 1
         msgs = []
         msg = ""
@@ -197,9 +203,12 @@ class Game:
                 msg += f" {move}"
         if msg != "":
             msgs.append(msg)
-        print(delimiter.join(msgs))
+        return delimiter.join(msgs)
 
-    def get_player(self, color):
+    def show_history(self, delimiter: str = "\n"):
+        print(self.get_history(delimiter))
+
+    def get_player(self, color: str):
         if color not in ["white", "black"]:
             raise ValueError('`color` must be either "white" or "black".')
         return self.player1 if self.player1.color == color else self.player2
@@ -224,5 +233,5 @@ class Game:
     def print_board(self):
         print(self.board)
 
-    def show_board(self, loc=None, show_moves=False, **kwargs):
+    def show_board(self, loc: str = None, show_moves: bool = False, **kwargs):
         self.board.show(loc=loc, show_moves=show_moves, **kwargs)

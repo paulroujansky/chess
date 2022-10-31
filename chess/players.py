@@ -1,12 +1,14 @@
 """Player class."""
 import numpy as np
+from typing import List
 
 from .engine import init_pieces
-from .pieces import King
+from .moves import Move
+from .pieces import Piece, King
 
 
 class Player:
-    def __init__(self, color, pieces=None):
+    def __init__(self, color: str, pieces: List[Piece] = None):
 
         if color not in ["white", "black"]:
             raise ValueError('`color` must be either "white" or "black".')
@@ -53,7 +55,7 @@ class Player:
 
         return (piece, move)
 
-    def get_piece(self, coords):
+    def get_piece(self, coords: tuple):
         for i, piece in enumerate(self.pieces):
             if piece.coords == coords:
                 return (i, piece)
@@ -63,5 +65,5 @@ class Player:
             if isinstance(piece, King):
                 return (i, piece)
 
-    def move(self, piece, move):
+    def move(self, piece: Piece, move: Move):
         return piece.move(move.get_new_coords(piece.coords))

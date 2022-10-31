@@ -1,20 +1,23 @@
 """Board class and functions."""
 from copy import deepcopy
+from typing import List
 
 import numpy as np
 
 from .constants import COL_NAMES, ROW_NAMES
-from .coords import coords_to_loc, coords_to_np, loc_to_coords
+from .coords import coords_to_loc, coords_to_np_coords, loc_to_coords
+from .players import Player
+from .pieces import Piece
 from .plot import show_board
 
 
-def create_board():
+def create_board() -> np.ndarray:
     board = np.zeros((8, 8), dtype=object)
     board.fill(None)
     return board
 
 
-def board_to_string(board):
+def board_to_string(board: np.ndarray) -> str:
     board = board.copy().astype(str)
     board[board == "None"] = ""
 
@@ -39,12 +42,12 @@ def board_to_string(board):
     return strng
 
 
-def display_board(board):
+def display_board(board: np.ndarray):
     print(board_to_string(board))
 
 
 class Board:
-    def __init__(self, players=None):
+    def __init__(self, players: List[Player] = None):
         self.chessboard = create_board()
         if players:
             self.add_players(players)
@@ -52,25 +55,22 @@ class Board:
     def copy(self):
         return deepcopy(self)
 
-    @classmethod
-    def from_players(cls, players):
-        return Board(players)
-
-    def add_players(self, players):
+    def add_players(self, players: List[Player]):
         self.players = players
         for player in players:
             for piece in player.pieces:
                 self.set_piece(piece)
 
-    def get_player(self, color):
+    def get_player(self, color: str):
         for player in self.players:
             if player.color == color:
                 return player
 
     def to_str_arr(self):
         chessboard = self.chessboard.copy()
-        chessboard[chessboard == None] = ""  # noqa: E711
-        return chessboard.astype(str)
+        chessboard_str = chessboard.astype(str)
+        chessboard_str[chessboard_str == "None"] = ""
+        return chessboard_str
 
     def __str__(self):
         return board_to_string(self.to_str_arr())
@@ -84,20 +84,20 @@ class Board:
                 moves = piece.get_valid_moves(self)
         show_board(self.to_str_arr(), piece=piece, moves=moves, **kwargs)
 
-    def get_piece(self, loc):
+    def get_piece(self, loc) -> Piece:
         if isinstance(loc, str):
             coords = loc_to_coords(loc)
         elif isinstance(loc, (tuple, list)):
             coords = tuple(loc)
         else:
             raise ValueError("`loc` must be either a str or a 2-tuple")
-        return self.chessboard[coords_to_np(coords)]
+        return self.chessboard[coords_to_np_coords(coords)]
 
-    def set_piece(self, piece):
-        self.chessboard[coords_to_np(piece.coords)] = piece
+    def set_piece(self, piece: Piece):
+        self.chessboard[coords_to_np_coords(piece.coords)] = piece
 
-    def del_piece(self, piece):
-        self.chessboard[coords_to_np(piece.coords)] = None
+    def del_piece(self, piece: Piece):
+        self.chessboard[coords_to_np_coords(piece.coords)] = None
 
     def get_moves(self, loc):
         piece = self.get_piece(loc)

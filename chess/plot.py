@@ -5,7 +5,7 @@ import numpy as np
 import seaborn as sns
 
 from .constants import COL_NAMES, ROW_NAMES
-from .coords import coords_to_np
+from .coords import coords_to_np_coords
 
 CMAP = ["#faedcd", "#d4a373", "#94cdff", "#ebffb0"]
 
@@ -27,12 +27,12 @@ def show_board(board, cmap=CMAP, piece=None, moves=None):
     background = BACKGROUND.copy()
 
     if piece is not None:
-        piece_idx = coords_to_np(piece.coords)
+        piece_idx = coords_to_np_coords(piece.coords)
         background[piece_idx] = 2
 
         if moves is not None and len(moves) > 0:
             moves_idx = [
-                coords_to_np(move.get_new_coords(piece.coords)) for move in moves
+                coords_to_np_coords(move.get_new_coords(piece.coords)) for move in moves
             ]
             for move_idx in moves_idx:
                 background[move_idx] = 3

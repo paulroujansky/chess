@@ -1,5 +1,6 @@
 """Piece classes."""
 from abc import ABC
+from typing import List
 
 from .coords import Coords, coords_to_loc
 from .moves import KingSideCastling, Move, QueenSideCastling, is_move_valid
@@ -8,24 +9,25 @@ from .utils import staticproperty
 
 class Piece(ABC, Coords):
 
+    SYMBOL = ""
     MOVES = []
 
-    def __init__(self, coords, color, has_moved=False):
+    def __init__(self, coords: tuple, color: str, has_moved: bool = False):
         self.color = color
         self.has_moved = has_moved
 
         Coords.__init__(self, coords)
 
-    def move(self, new_coords):
+    def move(self, new_coords: tuple) -> tuple:
         self.coords = new_coords
         self.has_moved = True
         return self.coords
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.SYMBOL}{self.color[0]}"
 
     @property
-    def theoretical_moves(self):
+    def theoretical_moves(self) -> List[Move]:
         (x, y) = self.coords
         moves = []
         for move in self.MOVES:
@@ -33,14 +35,14 @@ class Piece(ABC, Coords):
                 moves.append(move)
         return moves
 
-    def get_valid_moves(self, board, conditions=None, check_check=True):
+    def get_valid_moves(self, board, conditions=None, check_check=True) -> List[Move]:
         return [
             move
             for move in self.theoretical_moves
             if is_move_valid(self, move, board, conditions, check_check)
         ]
 
-    def get_move(self, new_loc, board, **kwargs):
+    def get_move(self, new_loc, board, **kwargs) -> Move:
         for move in self.get_valid_moves(board, **kwargs):
             if coords_to_loc(move.get_new_coords(self.coords)) == new_loc:
                 return move
@@ -51,9 +53,6 @@ class Pawn(Piece):
 
     SYMBOL = "P"
     VALUE = 1
-
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
 
     @property
     def MOVES(self):
@@ -91,17 +90,11 @@ class Knight(Piece):
     SYMBOL = "N"
     VALUE = 3
 
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
-
 
 class Bishop(Piece):
 
     SYMBOL = "B"
     VALUE = 3
-
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
 
     @staticproperty
     def MOVES():
@@ -119,9 +112,6 @@ class Rook(Piece):
     SYMBOL = "R"
     VALUE = 6
 
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
-
     @staticproperty
     def MOVES():
         moves = []
@@ -137,9 +127,6 @@ class Queen(Piece):
 
     SYMBOL = "Q"
     VALUE = 9
-
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
 
     @staticproperty
     def MOVES():
@@ -173,6 +160,3 @@ class King(Piece):
         QueenSideCastling(),
         KingSideCastling(),
     ]
-
-    def __init__(self, coords, color, has_moved=False):
-        Piece.__init__(self, coords, color, has_moved)
