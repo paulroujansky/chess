@@ -1,7 +1,7 @@
 [![unit-tests](https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg)](https://github.com/paulroujansky/chess/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/paulroujansky/chess/branch/master/graph/badge.svg)](https://codecov.io/gh/paulroujansky/chess)
 
-# <img src="static/img/chess_pieces/black_knight.png" style="vertical-align: bottom;" height=33 /> Chess engine
+# <img src="static/img/chess_pieces/black_knight.png" style="vertical-align:middle" height=33 /> <span style="">Chess engine</span>
 
 This repository contains code that enables to play chess against a computer.
 
