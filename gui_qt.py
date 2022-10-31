@@ -304,12 +304,13 @@ def get_piece_img(piece_name):
 
 def main(play_against_computer: bool = False):
     # create an instance of QApplication
-    pycalc = QApplication(sys.argv)
+    app = QApplication(sys.argv)
+
     # show the chess GUI
     view = CheckerBoard(play_against_computer)
 
     # execute the chess main loop
-    sys.exit(pycalc.exec_())
+    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
