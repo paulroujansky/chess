@@ -1,8 +1,5 @@
 """Example: create a game and let user play against computer through CLI."""
-import time
 from random import randint
-
-from tqdm import tqdm
 
 from chess.coords import coords_to_loc
 from chess.game import Game

@@ -1,7 +1,7 @@
 [![unit-tests](https://github.com/paulroujansky/chess/actions/workflows/main.yml/badge.svg)](https://github.com/paulroujansky/chess/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/paulroujansky/chess/branch/master/graph/badge.svg)](https://codecov.io/gh/paulroujansky/chess)
 
-# Chess engine
+# <img src="static/img/chess_pieces/black_knight.png" style="vertical-align: bottom;" height=33 /> Chess engine
 
 This repository contains code that enables to play chess against a computer.
 
@@ -33,12 +33,19 @@ In order to install them manually, run the following command:
     pip install -r requirements.txt
 
 
-# Run an example
+# Usage
 
 Run the following command to run an example game (computer vs computer):
 
     python example_game.py
 
+Run the following command to play against computer using CLI:
+
+    python example_game_human.py
+
+Run the following command to play against computer (or human) using GUI:
+
+    python gui_qt.py
 
 # Contribution guidelines
 
