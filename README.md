@@ -81,6 +81,7 @@ Sounds were picked from [chess.com](https://www.chess.com/).
 
 
 # To-do :memo:
-- add tests
-- enable to play back a party from history
-- add basic strategy
+- [ ] package repo
+- [ ] add unit tests
+- [ ] enable to play back a party from history
+- [ ] add basic strategy
