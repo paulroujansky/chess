@@ -1,5 +1,2 @@
-numpy
-matplotlib
-seaborn
-fire
-PyQt5
+numpy==1.21.0
+fire==0.4.0

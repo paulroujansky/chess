@@ -28,22 +28,34 @@ Use the following command to set up a new virtual environment:
 
 ## Install dependencies
 
-In order to install them manually, run the following command:
+Use the following command to install dependencies:
 
     pip install -r requirements.txt
 
 
 # Usage
 
-Run the following command to run an example game (computer vs computer):
+## CLI
+
+Install the following requirements:
+
+    pip install -r requirements-mpl.txt
+
+Use the following command to run an example game (computer vs computer):
 
     python example_game.py
 
-Run the following command to play against computer using CLI:
+Use the following command to play against computer using CLI:
 
     python example_game_human.py
 
-Run the following command to play against computer (or human) using GUI:
+## GUI
+
+Install the following requirements:
+
+    pip install -r requirements-qt.txt
+
+Use the following command to play against computer (or human) using GUI:
 
     python gui_qt.py
 
@@ -63,9 +75,12 @@ Before committing, from within the main directory, run the following in order to
 
     black .
 
+## Notes
+
+Sounds were picked from [chess.com](https://www.chess.com/).
+
 
 # To-do :memo:
 - add tests
-- add a GUI
 - enable to play back a party from history
 - add basic strategy

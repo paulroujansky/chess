@@ -1,22 +1,25 @@
 """Graphical User Interface (GUI) based on PyQt library."""
 import sys
+import time
 from functools import partial
 from random import randint
 from typing import List
 
 import fire
 import numpy as np
+from playsound import playsound
+from pygame import mixer
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import (
     QApplication,
-    QSizePolicy,
     QGridLayout,
     QHBoxLayout,
     QLabel,
     QMainWindow,
     QMessageBox,
     QPushButton,
+    QSizePolicy,
     QVBoxLayout,
     QWidget,
 )
@@ -27,11 +30,43 @@ from chess.moves import Move
 from chess.pieces import Piece
 from chess.plot import BACKGROUND, CMAP
 
+COMPUTER_LATENCY = 2  # seconds
+
+
+from threading import Thread
+
+from playsound import playsound
+from PyQt5.QtCore import QRunnable, Qt, QThreadPool
+
+mixer.init()
+
+
+def play_sound_effect(path):
+    playsound(path, block=False)
+
+
+move_sound = mixer.Sound("static/sounds/move-self.mp3")
+capture_sound = mixer.Sound("static/sounds/capture.mp3")
+notify_sound = mixer.Sound("static/sounds/notify.mp3")
+
+
+def play_move_sound():
+    move_sound.play()
+
+
+def play_capture_sound():
+    capture_sound.play()
+
+
+def play_notify_sound():
+    notify_sound.play()
+
 
 class CheckerBoard(QMainWindow):
     def __init__(self, play_against_computer: bool):
         """View initializer."""
         super().__init__()
+
         # Set some main window's properties
         self.setWindowTitle("Chess")
         self.setWindowIcon(QIcon("static/img/chess_pieces/black_knight.png"))
@@ -71,7 +106,7 @@ class CheckerBoard(QMainWindow):
 
         self.history_layout = QVBoxLayout()
         history_title_label = QLabel("<b>History</b>")
-        history_title_label.setFixedWidth(200)
+        history_title_label.setFixedWidth(140)
         self.history_content_label = QLabel()
         self.history_layout.addWidget(history_title_label)
         self.history_layout.addWidget(self.history_content_label)
@@ -97,7 +132,7 @@ class CheckerBoard(QMainWindow):
         self.update_layout()
 
         # self.setFixedSize(self.width(), self.height())
-        self.setFixedSize(700, 580)
+        self.setFixedSize(640, 580)
 
         self.show()
 
@@ -108,11 +143,29 @@ class CheckerBoard(QMainWindow):
                 f"You play {self.human_color}, computer plays {self.computer_color}",
             )
 
-        if self.computer_color == "white":
-            self.computer_play()
+            if self.computer_color == "white":
+                self.computer_play()
+
+    def play_sound_effect(self, sound_type):
+        if sound_type == "move":
+            target = play_move_sound
+        elif sound_type == "capture":
+            target = play_capture_sound
+        elif sound_type == "notify":
+            target = play_notify_sound
+        else:
+            print(
+                f"[ERROR] No sound effect matching type {sound_type}."
+                " Avaiable types are: 'capture', 'move' and 'notify'."
+            )
+            return
+        thread = Thread(target=target)
+        thread.start()
 
     def computer_play(self):
-        self.game.next_move()
+        time.sleep(COMPUTER_LATENCY)
+        captured_piece = self.game.next_move()
+        self.play_sound_effect(sound_type="capture" if captured_piece else "move")
         self.update_layout()
 
     def select_cell(self, i, j):
@@ -157,7 +210,8 @@ class CheckerBoard(QMainWindow):
             move = self.selected_piece.get_move(
                 coords_to_loc(np_coords_to_coords(i, j)), self.game.board
             )
-            self.game.next_move(move=(self.selected_piece, move))
+            captured_piece = self.game.next_move(move=(self.selected_piece, move))
+            self.play_sound_effect(sound_type="capture" if captured_piece else "move")
             self.selected_piece = None
             self.valid_moves = None
 

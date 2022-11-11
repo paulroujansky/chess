@@ -184,6 +184,8 @@ class Game:
         # switch turn
         self.switch_turn()
 
+        return captured_piece
+
     @property
     def board(self):
         return Board([self.player1, self.player2])
